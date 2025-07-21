@@ -21,11 +21,14 @@ func main() {
 
 	{
 		cars := router.Group("/cars")
+
+        //READ
 		cars.GET("/", func(c *gin.Context) {
 			data := CreateData(c, db.Table("cars"), []string{"car_id"})
 			c.JSON(200, data)
 		})
 
+        //ADD
 		cars.POST("/add", func(c *gin.Context) {
 
 			conn := db.Begin()
@@ -89,11 +92,12 @@ func main() {
 
 			conn.Commit()
 			c.JSON(201, map[string]interface{}{
-				"status":  false,
+				"status":  true,
 				"message": "Data Mobil Berhasil Ditambah",
 			})
 		})
 
+        //EDIT
 		cars.POST("/edit/:id", func(c *gin.Context) {
 			conn := db.Begin()
 
@@ -165,10 +169,12 @@ func main() {
 
 			conn.Commit()
 			c.JSON(200, map[string]interface{}{
-				"status":  false,
+				"status":  true,
 				"message": "Data Mobil Berhasil diUpdate",
 			})
 		})
+
+        //DELETE SECTION
 		cars.POST("/delete/:id", func(c *gin.Context) {
 			conn := db.Begin()
 
@@ -208,11 +214,14 @@ func main() {
 
 	{
 		orders := router.Group("/orders")
+
+        //READ
 		orders.GET("/", func(c *gin.Context) {
 			data := CreateData(c, db.Table("orders"), []string{"order_id", "car_id"})
 			c.JSON(200, data)
 		})
 
+        //ADD
 		orders.POST("/add", func(c *gin.Context) {
 
 			conn := db.Begin()
@@ -279,11 +288,12 @@ func main() {
 
 			conn.Commit()
 			c.JSON(201, map[string]interface{}{
-				"status":  false,
+				"status":  true,
 				"message": "Data Order Berhasil Ditambah",
 			})
 		})
 
+        //UPDATE
 		orders.POST("/edit/:id", func(c *gin.Context) {
 			conn := db.Begin()
 
@@ -347,10 +357,12 @@ func main() {
 
 			conn.Commit()
 			c.JSON(200, map[string]interface{}{
-				"status":  false,
+				"status":  true,
 				"message": "Data order Berhasil diUpdate",
 			})
 		})
+
+        //DELETE
 		orders.POST("/delete/:id", func(c *gin.Context) {
 			conn := db.Begin()
 
